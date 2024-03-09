@@ -8,4 +8,4 @@
 
 Preview: 👻 [無名小栈](https://blog.imsyy.top/)
 
-Docs: 📖 [anzhiyu Docs](https://docs.anheyu.com/)
+Docs: 📖 [主题文档](https://blog.imsyy.top/pages/categories/%E4%B8%BB%E9%A2%98%E6%96%87%E6%A1%A3)
