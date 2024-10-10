@@ -1,0 +1,8 @@
+dist
+node_modules
+pnpm-lock.yaml
+LICENSE.md
+tsconfig.json
+tsconfig.*.json
+auto-imports.d.ts
+components.d.ts

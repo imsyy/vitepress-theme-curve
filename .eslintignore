@@ -1,0 +1,6 @@
+node_modules
+dist
+.vitepress/dist
+.cache
+auto-imports.d.ts
+components.d.ts

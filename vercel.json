@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "framework": "vitepress",
+  "outputDirectory": "./.vitepress/dist",
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/feed.xml", "destination": "/feed.xml" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ]
+}

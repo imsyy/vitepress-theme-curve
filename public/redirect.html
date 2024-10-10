@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>安全中心 | 無名小栈</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        box-sizing: border-box;
+      }
+      :root {
+        --main-site-background: #f7f9fe;
+        --main-card-border: #e3e8f7;
+        --main-card-background: #fff;
+        --main-font-color: #363636;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --main-site-background: #18171d;
+          --main-card-border: #3d3d3f;
+          --main-card-background: #1b1c20;
+          --main-font-color: #f7f7fa;
+        }
+      }
+      a {
+        text-decoration: none;
+        color: var(--main-font-color);
+      }
+      body {
+        background-color: var(--main-site-background);
+        color: var(--main-font-color);
+        font-family: "PingFang SC", "Open Sans", "Microsoft YaHei", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100vw;
+        width: 100dvw;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        transition:
+          color 0.3s,
+          background-color 0.3s;
+      }
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      header .logo img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+      }
+      header .title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      header .title .site-name {
+        font-size: 30px;
+        font-weight: bold;
+      }
+      header .title .site-tip {
+        font-size: 20px;
+        margin-top: 8px;
+        opacity: 0.6;
+      }
+      main {
+        margin: 30px 20px 60px;
+        border-radius: 16px;
+        padding: 30px;
+        max-width: 768px;
+        min-width: 380px;
+        background-color: var(--main-card-background);
+        border: 1px solid var(--main-card-border);
+      }
+      main .tip {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        opacity: 0.4;
+      }
+      main #url {
+        display: block;
+        padding: 12px 20px;
+        border-radius: 8px;
+        width: 100%;
+        text-align: center;
+        border: 1px solid var(--main-card-border);
+        background-color: var(--main-site-background);
+      }
+      main #site-info {
+        display: inline-flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        font-size: 18px;
+      }
+      main #jump-content.warn {
+        color: #ffb02e;
+      }
+      main #jump-content.safe {
+        color: #00d26a;
+      }
+      main #jump-content.danger {
+        color: #f8312f;
+      }
+      main #jump-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        width: 160px;
+        margin: 30px auto 0;
+        border-radius: 8px;
+        color: var(--main-font-color);
+        background-color: var(--main-card-border);
+        transition: background-color 0.3s;
+        cursor: pointer;
+      }
+      main #jump-button:hover {
+        background-color: var(--main-site-background);
+      }
+      footer {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        margin: 20px;
+        opacity: 0.6;
+        font-size: 15px;
+      }
+      footer .icp::before {
+        content: "|";
+        margin: 0 8px;
+        margin-left: 4px;
+        opacity: 0.2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img src="./images/logo/logo.webp" alt="" />
+      </div>
+      <div class="title">
+        <span class="site-name">無名小栈</span>
+        <span class="site-tip">安全中心</span>
+      </div>
+    </header>
+    <main>
+      <span class="tip">您即将离开無名小栈，前往</span>
+      <span id="url"></span>
+      <div id="jump-content" class="warn">
+        <span id="site-info">⚠️ 该网址安全性未知，请注意您的帐号和财产安全</span>
+        <div id="jump-button">继续前往</div>
+      </div>
+    </main>
+    <footer>
+      <a class="power" href="https://blog.imsyy.top/">
+        ©
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        無名小栈
+      </a>
+      <a class="icp" href="https://beian.miit.gov.cn/" target="_blank"> 豫ICP备2022018134号-1 </a>
+    </footer>
+    <script>
+      // 跳转网址
+      let jumpLink;
+      let interval;
+      // 获取元素
+      const urlDom = document.getElementById("url");
+      const urlTip = document.getElementById("site-info");
+      const jumpContent = document.getElementById("jump-content");
+      const jumpButton = document.getElementById("jump-button");
+      // 网址白名单
+      const whitelist = [
+        "*.imsyy.top",
+        "gitee.com",
+        "github.com",
+        "*.baidu.com",
+        "*.bing.cn",
+        "npmjs.com",
+      ];
+      // 网址黑名单
+      const blacklist = ["*.taobao.com", "*.jd.com"];
+      // 提示文本
+      const tipText = {
+        safe: "✅ 该网址为信任网址，即将跳转",
+        danger: "⛔ 该网址处于黑名单",
+      };
+      // 自动跳转
+      const autoJump = () => {
+        let count = 3;
+        const updateContent = () => {
+          jumpButton.innerHTML = `${count} 秒后自动跳转`;
+          count--;
+          if (count < 0) {
+            clearInterval(interval);
+            jumpButton.innerHTML = "正在跳转";
+            window.location.replace(jumpLink);
+          }
+        };
+        // 每秒更新一次
+        updateContent();
+        interval = setInterval(updateContent, 1000);
+      };
+      // 获取跳转网址
+      const getJumpUrl = () => {
+        try {
+          // 解析 URL 参数
+          const urlParams = new URLSearchParams(window.location.search);
+          const encodedUrl = urlParams.get("url");
+          // 解密 Base64
+          jumpLink = atob(encodedUrl);
+          urlDom.innerHTML = jumpLink;
+          // 获取网址的主机名
+          const urlHostname = new URL(jumpLink).hostname;
+          // 判断网址是否在黑名单中
+          for (let i = 0; i < blacklist.length; i++) {
+            const blackPattern = blacklist[i].replace(/\*/g, ".*");
+            if (urlHostname.match(blackPattern)) {
+              // 显示提示信息
+              urlTip.innerHTML = tipText.danger;
+              jumpButton.innerHTML = "禁止跳转";
+              jumpButton.style.cursor = "not-allowed";
+              jumpButton.style.pointerEvents = "none";
+              jumpButton.style.opacity = "0.4";
+              jumpContent.className = "danger";
+              return true;
+            }
+          }
+          // 判断网址是否在白名单中
+          for (let i = 0; i < whitelist.length; i++) {
+            const whitePattern = whitelist[i].replace(/\*/g, ".*");
+            if (urlHostname.match(whitePattern)) {
+              // 显示提示信息
+              urlTip.innerHTML = tipText.safe;
+              jumpContent.className = "safe";
+              autoJump();
+              return true;
+            }
+          }
+        } catch (error) {
+          console.error(error);
+          jumpContent.remove();
+          urlDom.innerHTML = "获取跳转链接失败";
+        }
+      };
+      document.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.keyCode === 123) {
+          event.preventDefault();
+        }
+        if (
+          event.ctrlKey &&
+          event.shiftKey &&
+          (event.keyCode === 73 || event.keyCode === 74 || event.keyCode === 67)
+        ) {
+          event.preventDefault();
+        }
+      });
+      jumpButton.addEventListener("click", () => {
+        clearInterval(interval);
+        jumpButton.innerHTML = "正在跳转";
+        if (jumpLink) window.location.replace(jumpLink);
+      });
+      window.addEventListener("DOMContentLoaded", () => {
+        getJumpUrl();
+      });
+    </script>
+  </body>
+</html>

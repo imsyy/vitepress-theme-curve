@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Site Title";
+  font-display: swap;
+  src: url("/fonts/title.ttf");
+}
+
+html,
+body,
+#app {
+  font-family: var(--main-font-family) !important;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 1rem;
+  font-style: normal;
+  color: var(--main-font-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

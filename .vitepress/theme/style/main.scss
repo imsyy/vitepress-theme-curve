@@ -1,0 +1,235 @@
+@import "./font.scss";
+@import "./animation.scss";
+
+// 全局颜色变量
+:root {
+  --main-color: #425aef;
+  --main-color-bg: #4259ef0d;
+  --main-site-background: #f7f9fe;
+  --main-card-background: #fff;
+  --main-card-second-background: #f7f7f9;
+  --main-font-color: #363636;
+  --main-font-second-color: #3c3c43cc;
+  --main-card-border: #e3e8f7;
+  --main-border-shadow: #2c2d300c;
+  --main-scrollbar-bar: rgba(60, 60, 67, 0.4);
+  --main-mask-background: rgba(255, 255, 255, 0.95);
+  --main-mask-Inverse-background: rgba(0, 0, 0, 0.08);
+  --main-mask-second-background: rgba(255, 255, 255, 0.45);
+  --main-color-opacity: rgba(255, 255, 255, 0.15);
+  --main-dark-opacity: rgba(255, 255, 255, 0.15);
+  --main-dark-shadow: #0000006e;
+  --main-info-color: #50bfff;
+  --main-info-color-gray: #50bfff60;
+  --main-warning-color: #ffa500;
+  --main-warning-color-gray: #f7ba2a60;
+  --main-success-color: #13ce66;
+  --main-success-color-gray: #13ce6660;
+  --main-error-color: #ff3842;
+  --main-error-color-gray: #ff38423b;
+  --main-color-blue: #0084ff;
+  --main-color-white: #ffffff40;
+  --main-color-gray: #999;
+  --main-color-red: #ff3842;
+  --main-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+    Cantarell, "Helvetica Neue", sans-serif;
+}
+
+html.dark {
+  --main-color: #dfac46;
+  --main-color-bg: #f2b94b23;
+  --main-site-background: #18171d;
+  --main-card-background: #1b1c20;
+  --main-card-second-background: #21232a;
+  --main-font-color: #f7f7fa;
+  --main-font-second-color: #a1a2b8;
+  --main-card-border: #3d3d3f;
+  --main-border-shadow: #00000050;
+  --main-scrollbar-bar: rgba(200, 200, 223, 0.4);
+  --main-mask-background: rgba(0, 0, 0, 0.95);
+  --main-mask-Inverse-background: rgba(255, 255, 255, 0.08);
+  --main-mask-second-background: rgba(0, 0, 0, 0.45);
+  --main-color-opacity: rgba(0, 0, 0, 0.15);
+}
+
+// 字体
+html {
+  &.hmos {
+    --main-font-family: "HarmonyOS_Regular", sans-serif;
+  }
+  &.lxgw {
+    --main-font-family: "LXGW WenKai Screen", sans-serif;
+  }
+  .iconfont {
+    font-size: 1rem;
+  }
+  button {
+    font-family: var(--main-font-family);
+  }
+}
+
+// 壁纸背景
+html {
+  &.image {
+    --main-card-border: #3d3d3f63;
+    --main-font-second-color: #c6c6c6;
+    --main-card-background: #1b1c20de;
+    --main-card-second-background: #21232ab5;
+    .main-nav {
+      backdrop-filter: blur(20px);
+      &.top {
+        backdrop-filter: blur(0);
+      }
+      @media (max-width: 768px) {
+        &.down {
+          .nav-center {
+            background-color: #1b1c20 !important;
+          }
+        }
+      }
+    }
+    .loading {
+      backdrop-filter: blur(20px);
+    }
+    .tags-cloud {
+      .all-tags {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+// 全局基础样式
+* {
+  -webkit-user-drag: none;
+  box-sizing: border-box;
+}
+
+html {
+  user-select: none;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  // 特殊情况
+  &.dark {
+    // 代码高亮
+    pre {
+      code {
+        .line {
+          span {
+            color: var(--shiki-dark) !important;
+          }
+        }
+      }
+    }
+  }
+  // 全站置灰
+  &.gray {
+    filter: grayscale(100%);
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--main-font-color);
+  background-color: var(--main-site-background);
+  animation: show forwards 0.5s;
+  overflow-x: hidden;
+  transition:
+    color 0.3s,
+    background-color 0.3s;
+}
+
+a {
+  text-decoration: none;
+  color: var(--main-font-color);
+  transition: all 0.3s;
+  .iconfont {
+    transition: all 0.3s;
+  }
+  &:hover {
+    color: var(--main-color);
+  }
+}
+
+#app {
+  width: 100vw;
+  width: 100dvw;
+  // height: 100vh;
+  transition: filter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  // 滚动条
+  .simplebar-scrollbar {
+    &::before {
+      right: 0;
+      left: 4px;
+      background: var(--main-scrolling-bar);
+      transition:
+        background 0.3s,
+        left 0.3s;
+      cursor: pointer;
+    }
+    &:hover {
+      &::before {
+        left: 2px;
+        background: var(--main-color);
+      }
+    }
+  }
+  // 全局模糊
+  &.blur {
+    filter: blur(20px);
+  }
+}
+
+// 通用卡片
+.s-card {
+  padding: 0.8rem;
+  border-radius: 16px;
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: all 0.3s;
+  cursor: pointer;
+  &:hover {
+    &.hover {
+      border-color: var(--main-color);
+      box-shadow: 0 8px 16px -4px var(--main-color-bg);
+    }
+  }
+}
+
+// 滚动条
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-scrollbar-bar);
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--main-color);
+  }
+}
+
+// 选中文本
+::selection {
+  background-color: var(--main-color);
+  color: #efefef;
+}
+
+// fancybox
+.fancybox__container {
+  .fancybox__progress {
+    background: var(--main-color) !important;
+  }
+  .fancybox__thumb {
+    &::after {
+      border-width: 2px !important;
+      border-color: var(--main-color) !important;
+    }
+  }
+}
