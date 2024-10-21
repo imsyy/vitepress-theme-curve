@@ -52,10 +52,8 @@ export const getSiteInfo = async (url) => {
  * @param {type} string - 类型
  * @returns {Promise<Object>} - 音乐详情
  */
-export const getMusicList = async (id, server = "netease", type = "playlist") => {
-  const result = await fetch(
-    `https://api-meting.efefee.cn/?server=${server}&type=${type}&id=${id}`,
-  );
+export const getMusicList = async (url, id, server = "netease", type = "playlist") => {
+  const result = await fetch(`${url}/?server=${server}&type=${type}&id=${id}`);
   const list = await result.json();
   return list.map((song) => {
     const { pic, ...data } = song;

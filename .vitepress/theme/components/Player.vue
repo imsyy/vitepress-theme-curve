@@ -13,7 +13,7 @@ import "aplayer/dist/APlayer.min.css";
 
 const store = mainStore();
 const { theme } = useData();
-const { enable, id, server, type } = theme.value.music;
+const { enable, url, id, server, type } = theme.value.music;
 const { playerShow, playerVolume, playState, playerData } = storeToRefs(store);
 
 // APlayer
@@ -23,7 +23,7 @@ const playerDom = ref(null);
 // 获取播放列表
 const getMusicListData = async () => {
   try {
-    const musicList = await getMusicList(id, server, type);
+    const musicList = await getMusicList(url, id, server, type);
     console.log(musicList);
     initAPlayer(musicList?.length ? musicList : []);
   } catch (error) {
