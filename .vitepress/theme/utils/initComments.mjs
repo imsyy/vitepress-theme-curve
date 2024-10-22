@@ -23,12 +23,25 @@ const initComments = async (themeConfig) => {
             },
           });
         });
+      case "twikoo":
+        // 引入资源
+        return await new Promise((resolve, reject) => {
+          loadScript(option[commentType].js, {
+            callback: () => {
+              if (typeof twikoo === "object") {
+                resolve(twikoo);
+              } else {
+                reject(new Error("Twikoo 初始化失败"));
+              }
+            },
+          });
+        });
       default:
         return false;
     }
   } catch (error) {
     console.error(`${commentType} 初始化失败`, error);
-    return false;
+    throw error;
   }
 };
 

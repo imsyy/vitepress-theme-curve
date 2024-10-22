@@ -300,11 +300,23 @@ export const themeConfig = {
   comment: {
     enable: false,
     // 评论系统选择
+    // artalk / twikoo
     type: "artalk",
-    // 评论系统配置
+    // artalk
+    // https://artalk.js.org/
     artalk: {
       site: "",
       server: "",
+    },
+    // twikoo
+    // https://twikoo.js.org/
+    twikoo: {
+      // 必填，若不想使用 CDN，可以使用 pnpm add twikoo 安装并引入
+      js: "https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.6.39/twikoo.all.min.js",
+      envId: "",
+      // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+      region: "ap-shanghai",
+      lang: "zh-CN",
     },
   },
   // 侧边栏

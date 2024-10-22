@@ -130,7 +130,7 @@
               <span class="name">复制选中文本</span>
             </div>
             <div
-              v-if="clickedType === 'text' && !commentCopyShow"
+              v-if="clickedType === 'text' && !commentCopyShow && theme.comment.type === 'artalk'"
               class="btn"
               @click="commentCopy(clickedTypeData)"
             >

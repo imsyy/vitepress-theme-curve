@@ -1,6 +1,12 @@
 <!-- 评论 -->
 <template>
-  <div v-if="theme.comment.enable" ref="mainCommentRef" id="main-comment" class="comment">
+  <div
+    v-if="theme.comment.enable"
+    :key="router.route.path"
+    ref="mainCommentRef"
+    id="main-comment"
+    class="comment"
+  >
     <div v-if="!fill" class="title">
       <span class="name">
         <i class="iconfont icon-chat"></i>
@@ -10,6 +16,7 @@
     </div>
     <!-- 区分评论系统 -->
     <Artalk v-if="theme.comment.type === 'artalk'" :fill="fill" />
+    <Twikoo v-else-if="theme.comment.type === 'twikoo'" :fill="fill" />
   </div>
 </template>
 
@@ -23,7 +30,6 @@ const props = defineProps({
     default: false,
   },
 });
-
 const mainCommentRef = ref(null);
 
 // 滚动至评论
