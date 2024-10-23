@@ -38,7 +38,9 @@ export const createRssFile = async (config, themeConfig) => {
     // 仅保留最近 10 篇文章
     if (feed.items.length >= 10) break;
     // 文章信息
-    const { title, description, date } = frontmatter;
+    let { title, description, date } = frontmatter;
+    // 处理日期
+    if (typeof date === "string") date = new Date(date);
     // 添加文章
     feed.addItem({
       title,

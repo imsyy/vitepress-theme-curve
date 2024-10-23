@@ -101,24 +101,28 @@ export const getAllPosts = async () => {
 export const getAllType = (postData) => {
   const tagData = {};
   // 遍历数据
-  postData.forEach((item) => {
+  postData.map((item) => {
     // 检查是否有 tags 属性
-    if (item.tags && item.tags.length > 0) {
-      // 遍历文章的每个标签
-      item.tags.forEach((tag) => {
-        // 初始化标签的统计信息，如果不存在
-        if (!tagData[tag]) {
-          tagData[tag] = {
-            count: 1,
-            articles: [item],
-          };
-        } else {
-          // 如果标签已存在，则增加计数和记录所属文章
-          tagData[tag].count++;
-          tagData[tag].articles.push(item);
-        }
-      });
+    if (!item.tags || item.tags.length === 0) return;
+    // 处理标签
+    if (typeof item.tags === "string") {
+      // 以逗号分隔
+      item.tags = item.tags.split(",");
     }
+    // 遍历文章的每个标签
+    item.tags.forEach((tag) => {
+      // 初始化标签的统计信息，如果不存在
+      if (!tagData[tag]) {
+        tagData[tag] = {
+          count: 1,
+          articles: [item],
+        };
+      } else {
+        // 如果标签已存在，则增加计数和记录所属文章
+        tagData[tag].count++;
+        tagData[tag].articles.push(item);
+      }
+    });
   });
   return tagData;
 };
@@ -131,24 +135,27 @@ export const getAllType = (postData) => {
 export const getAllCategories = (postData) => {
   const catData = {};
   // 遍历数据
-  postData.forEach((item) => {
-    // 检查是否有 categories 属性
-    if (item.categories && item.categories.length > 0) {
-      // 遍历文章的每个标签
-      item.categories.forEach((tag) => {
-        // 初始化标签的统计信息，如果不存在
-        if (!catData[tag]) {
-          catData[tag] = {
-            count: 1,
-            articles: [item],
-          };
-        } else {
-          // 如果标签已存在，则增加计数和记录所属文章
-          catData[tag].count++;
-          catData[tag].articles.push(item);
-        }
-      });
+  postData.map((item) => {
+    if (!item.categories || item.categories.length === 0) return;
+    // 处理标签
+    if (typeof item.categories === "string") {
+      // 以逗号分隔
+      item.categories = item.categories.split(",");
     }
+    // 遍历文章的每个标签
+    item.categories.forEach((tag) => {
+      // 初始化标签的统计信息，如果不存在
+      if (!catData[tag]) {
+        catData[tag] = {
+          count: 1,
+          articles: [item],
+        };
+      } else {
+        // 如果标签已存在，则增加计数和记录所属文章
+        catData[tag].count++;
+        catData[tag].articles.push(item);
+      }
+    });
   });
   return catData;
 };
