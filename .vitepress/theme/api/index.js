@@ -53,7 +53,7 @@ export const getSiteInfo = async (url) => {
  * @returns {Promise<Object>} - 音乐详情
  */
 export const getMusicList = async (url, id, server = "netease", type = "playlist") => {
-  const result = await fetch(`${url}/?server=${server}&type=${type}&id=${id}`);
+  const result = await fetch(`${url}?server=${server}&type=${type}&id=${id}`);
   const list = await result.json();
   return list.map((song) => {
     const { pic, ...data } = song;
