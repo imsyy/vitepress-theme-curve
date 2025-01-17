@@ -215,6 +215,24 @@ export const themeConfig = {
       ],
     },
   ],
+  // 封面配置
+  cover: {
+    // 是否开启双栏布局
+    twoColumns: false,
+    // 是否开启封面显示
+    showCover: {
+      // 是否开启封面显示 文章不设置cover封面会显示异常，可以设置下方默认封面
+      enable: true,
+      // 封面布局方式: left | right | both
+      coverLayout: 'both',
+      // 默认封面(随机展示)
+      defaultCover: [
+        'https://example.com/1.avif',
+        'https://example.com/2.avif',
+        'https://example.com/3.avif'
+      ]
+    }
+  },
   // 页脚信息
   footer: {
     // 社交链接（请确保为偶数个）
