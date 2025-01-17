@@ -6,6 +6,9 @@
 
 ---
 
+> [!TIP]
+> 近期将通过 Nuxt 重构本项目前后端，敬请期待
+
 Preview: 👻 [無名小栈](https://blog.imsyy.top/)
 
 Docs: 📖 [主题文档](https://blog.imsyy.top/pages/categories/%E4%B8%BB%E9%A2%98%E6%96%87%E6%A1%A3)
