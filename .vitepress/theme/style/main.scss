@@ -233,3 +233,25 @@ a {
     }
   }
 }
+
+//自定义块样式
+.custom-block {
+  .custom-block-content {
+    p, ul, ol, li {
+      color: var(--main-font-color) !important;
+    }
+  }
+
+  &.info, &.warning, &.danger, &.tip, &.summary {
+    .custom-block-content {
+      p, ul, ol, li {
+        color: var(--main-font-color) !important;
+      }
+    }
+  }
+
+  // 标题颜色保持原样
+  .custom-block-title {
+    color: inherit;
+  }
+}
