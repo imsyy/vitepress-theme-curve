@@ -80,6 +80,44 @@ const markdownConfig = (md, themeConfig) => {
                 <span class="post-img-tip">${alt}</span>
               </a>`;
   };
+  
+  // obsidian admonition
+  const fence = md.renderer.rules.fence;
+  md.renderer.rules.fence = (...args) => {
+    const [tokens, idx] = args;
+    const token = tokens[idx];
+    const lang = token.info.trim();
+
+    // 处理 Obsidian admonition
+    if (lang.startsWith('ad-')) {
+      const type = lang.substring(3); // 取ad-之后的内容，获取类型
+      const content = token.content;
+
+      const admonitionTypes = {
+        'note': 'info',
+        'question': 'info',
+        'warning': 'warning',
+        'tip': 'tip',
+        'summary': 'info',
+        'hint': 'tip',
+        'important': 'warning',
+        'caution': 'warning',
+        'error': 'danger',
+        'danger': 'danger'
+      };
+
+      const className = admonitionTypes[type] || 'info';
+      const title = type.toUpperCase();
+
+      return `<div class="${className} custom-block">
+            <p class="custom-block-title">${title}</p>
+            <div class="custom-block-content">
+              ${md.render(content)}
+            </div>
+    </div>`;
+    }
+    return fence(...args);
+  };  
 };
 
 export default markdownConfig;
